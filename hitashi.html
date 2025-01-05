@@ -3,220 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SR LOR</title>
-    <!-- مكتبة Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- مكتبة Vanta.js -->
-    <script src="https://unpkg.com/vanta/dist/vanta.net.min.js"></script>
-    <!-- خط Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>شجرة الخيارات</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
             font-family: 'Cairo', sans-serif;
-            color: #fff;
-            background-color: #0a0a0a;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #f5f5f5;
+            line-height: 1.8;
+            padding: 20px;
+            text-align: center;
+            overflow: hidden;
         }
 
-        #background {
+        h1 {
+            color: #ffba08;
+            text-shadow: 2px 2px 4px #000;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 15px auto;
+            display: inline-block;
+            max-width: 80%;
+            font-size: 1.2em;
+        }
+
+        .option button {
+            padding: 12px 25px;
+            margin: 10px;
+            background-color: #ffba08;
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .option button:hover {
+            background-color: #ffd447;
+            transform: scale(1.1);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #particles-js {
             position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-        }
-
-        .header {
-            text-align: center;
-            padding: 20px;
-            background-color: rgba(10, 10, 10, 0.9);
-            position: fixed;
             top: 0;
-            width: 100%;
-            z-index: 2;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            margin: 0;
-            color: #1e90ff;
-        }
-
-        .content {
-            text-align: center;
-            z-index: 1;
-            margin-top: 120px;
-            padding: 20px;
-        }
-
-        .content h1 {
-            font-size: 3rem;
-            margin: 0;
-            color: #1e90ff;
-        }
-
-        .content p {
-            font-size: 1.25rem;
-            margin-top: 1rem;
-            color: #d3d3d3;
-        }
-
-        .container {
-            margin: 40px auto;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .toggle-btn {
-            background-color: #1e90ff;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .toggle-btn:hover {
-            background-color: #187bcd;
-        }
-
-        .cards {
-            margin-top: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .card {
-            background: linear-gradient(135deg, #1e90ff, #005b99);
-            color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            width: 280px;
-            margin: 15px;
-            padding: 20px;
-            text-align: center;
-            display: none;
-            transition: transform 0.3s, opacity 0.3s;
-            opacity: 0;
-        }
-
-        .card.active {
-            display: block;
-            opacity: 1;
-        }
-
-        .card img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin-bottom: 15px;
-        }
-
-        .card h3 {
-            margin: 10px 0 5px;
-        }
-
-        .card p {
-            margin: 0;
-        }
-
-        .title {
-            margin-bottom: 20px;
-            font-size: 1.75rem;
-            color: #ffffff;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .content h1 {
-                font-size: 2.5rem;
-            }
-
-            .content p {
-                font-size: 1.125rem;
-            }
-
-            .card {
-                width: 90%;
-                margin: 10px auto;
-            }
-
-            .toggle-btn {
-                font-size: 14px;
-                padding: 10px 20px;
-            }
+            left: 0;
         }
     </style>
 </head>
 <body>
-    <div id="background"></div>
+    <div id="particles-js"></div>
 
-    <div class="header">
-        <h1>HITASHI</h1>
-    </div>
+    <h1>اختيارك يحدد مصيرك</h1>
 
-    <div class="content">
-        <h1>مرحبًا بكم في موقع هيتاشي</h1>
-        <p>اكتشف المزيد من خلال تصفح البطاقات أدناه</p>
-    </div>
-
-    <div class="container">
-    
-        <button class="toggle-btn" onclick="nextCard()">تبديل البطاقات</button>
-
-        <div class="cards">
-            <div class="card active">
-                <img src="https://via.placeholder.com/100" alt="User Image">
-                <h3>وائل | ميهوك</h3>
-                <p>المؤسس | الامبراطور</p>
-            </div>
-            <div class="card">
-                <img src="https://via.placeholder.com/100" alt="User Image">
-                <h3>جين</h3>
-                <p>معتزل</p>
-            </div>
-            <div class="card">
-                <img src="https://via.placeholder.com/100" alt="User Image">
-                <h3>شينوبو</h3>
-                <p>معتزلة</p>
-            </div>
-            <div class="card">
-                <img src="https://via.placeholder.com/100" alt="User Image">
-                <h3>انوس</h3>
-                <p>معتزل</p>
-            </div>
+    <!-- الفصل الأول -->
+    <div id="scene1">
+        <p>
+            أنت في وسط غابة مظلمة. الطريق ينقسم إلى ثلاثة مسارات:  
+            - الأول يؤدي إلى جبل مظلم.  
+            - الثاني يؤدي إلى نهر جارف.  
+            - الثالث يعود إلى القرية المحترقة.  
+            ماذا ستختار؟
+        </p>
+        <div class="option">
+            <button onclick="showScene('scene2-mountain')">اتجه إلى الجبل</button>
+            <button onclick="showScene('scene2-river')">اتجه إلى النهر</button>
+            <button onclick="showScene('scene2-village')">عد إلى القرية</button>
         </div>
     </div>
 
-    <script>
-        let currentIndex = 0;
+    <!-- الفصول الأخرى هنا (مشاهد الفصول الثانية والثالثة) -->
 
-        function nextCard() {
-            const cards = document.querySelectorAll('.card');
-            cards[currentIndex].classList.remove('active');
-            currentIndex = (currentIndex + 1) % cards.length;
-            cards[currentIndex].classList.add('active');
+    <!-- النهاية -->
+    <div id="end" class="hidden">
+        <p>شكراً للعبك. هذه كانت نهاية القصة!</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 100,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {"value": "#ffffff"},
+                "shape": {
+                    "type": "circle",
+                    "stroke": {"width": 0, "color": "#000000"},
+                    "polygon": {"nb_sides": 5},
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {"enable": false, "speed": 1, "opacity_min": 0.1, "sync": false}
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {"enable": false, "speed": 40, "size_min": 0.1, "sync": false}
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {"enable": false, "rotateX": 600, "rotateY": 1200}
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {"enable": true, "mode": "repulse"},
+                    "onclick": {"enable": true, "mode": "push"},
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {"distance": 400, "line_linked": {"opacity": 1}},
+                    "bubble": {"distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3},
+                    "repulse": {"distance": 200, "duration": 0.4},
+                    "push": {"particles_nb": 4},
+                    "remove": {"particles_nb": 2}
+                }
+            },
+            "retina_detect": true
+        });
+
+        function showScene(sceneId) {
+            const scenes = document.querySelectorAll('div[id^="scene"]');
+            scenes.forEach(scene => scene.classList.add('hidden'));
+            const targetScene = document.getElementById(sceneId);
+            if (targetScene) {
+                targetScene.classList.remove('hidden');
+            }
         }
 
-        window.onload = function() {
-            VANTA.NET({
-                el: "#background",
-                color: 0x1e90ff,
-                backgroundColor: 0x0a0a0a,
-                points: 10.0,
-                maxDistance: 20.0,
-                spacing: 15.0
-            });
-        };
+        function endStory() {
+            const scenes = document.querySelectorAll('div[id^="scene"]');
+            scenes.forEach(scene => scene.classList.add('hidden'));
+            document.getElementById('end').classList.remove('hidden');
+        }
     </script>
 </body>
 </html>

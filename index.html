@@ -11,21 +11,64 @@
     <!-- خط Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <!-- رابط ملف CSS -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="background"></div>
 
-    <div class="header">
-        <h1>HITASHI | SR LOR</h1>
+<!--القائمة المنبثقة-->
+<button class="floating-btn" onclick="togglePopup()">
+    <i class="fas fa-bars"></i>
+</button>
+
+<div class="popup" id="popup">
+    <div class="popup-content" id="popup-content">
+        <div class="popup-buttons">
+
+            <button onclick="openPage('lor.html')">
+                <i class="fas fa-network-wired"></i> مجتمع لور
+            </button>
+            <button onclick="openPage('referee.html')">
+                <i class="fas fa-file-alt"></i> مجتمع الريفيري
+            </button>
+            <button onclick="openPage('guilds.html')">
+                <i class="fas fa-castle"></i> النقابات
+            </button>
+            <button onclick="openPage('arenas.html')">
+                <i class="fas fa-battle-net"></i> الساحات
+            </button>
+            <button onclick="openPage('hitachi-store.html')">
+                <i class="fas fa-store"></i> متجر هيتاشي
+            </button>
+            <button onclick="openPage('hitachi-bank.html')">
+                <i class="fas fa-university"></i> بنك هيتاشي
+            </button>
+            <button onclick="openPage('hitachi-seasons.html')">
+                <i class="fas fa-shield-alt"></i> مواسم هيتاشي
+            </button>
+            <button onclick="openPage('lor-stories.html')">
+                <i class="fas fa-book"></i> روايات لور
+            </button>
+            <button onclick="openPage('hitachi-admins.html')">
+                <i class="fas fa-users"></i> اداريين هيتاشي
+            </button>
+            
+
+        </div>
+        <button class="close-btn" id="close-btn" onclick="togglePopup()">إغلاق</button>
     </div>
+</div>
+
+    
 
     <div class="content">
         <h1>مرحبًا بكم في موقع هيتاشي</h1>
         <p>هذا العرض الاولي فقط للموقع</p>
     </div>
-
-    
 
     <!-- رابط ملف JavaScript -->
     <script src="script.js"></script>
